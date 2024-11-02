@@ -1,0 +1,389 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "WhatsApp API Clone",
+        "description": "This is the API documentation for the WhatsApp API Clone project.",
+        "contact": {
+            "email": "support@example.com"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/chatroom/create": {
+            "post": {
+                "tags": [
+                    "Chatrooms"
+                ],
+                "summary": "Create a new chatroom.",
+                "operationId": "63e43a3ce8bd8676a5536836eab1a75e",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "General Chat"
+                                    },
+                                    "max_members": {
+                                        "type": "integer",
+                                        "example": 10
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Chatroom created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "chatroom": {
+                                            "$ref": "#/components/schemas/Chatroom"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Validation error"
+                    }
+                }
+            }
+        },
+        "/api/chatroom/list": {
+            "get": {
+                "tags": [
+                    "Chatrooms"
+                ],
+                "summary": "List all chatrooms",
+                "description": "List all chatrooms.",
+                "operationId": "d3d46fc4f09dc8698855af53aa774d5b",
+                "responses": {
+                    "200": {
+                        "description": "List of chatrooms",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "chatrooms": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/Chatroom"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/chatroom/enter": {
+            "post": {
+                "tags": [
+                    "Chatrooms"
+                ],
+                "summary": "Enter a chatroom",
+                "description": "Enter a chatroom.",
+                "operationId": "b1d03c11ce9ecdcd9cc550c00e55c3f1",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "chatroom_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "user_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Joined chatroom successfully"
+                    },
+                    "403": {
+                        "description": "Chatroom is full"
+                    },
+                    "400": {
+                        "description": "Validation error"
+                    }
+                }
+            }
+        },
+        "/api/chatroom/leave": {
+            "post": {
+                "tags": [
+                    "Chatrooms"
+                ],
+                "summary": "Leave a chatroom",
+                "description": "Leave a chatroom.",
+                "operationId": "bfe664d3bf010eade1c8b65c14686579",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "chatroom_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "user_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Left chatroom successfully"
+                    },
+                    "400": {
+                        "description": "Validation error"
+                    }
+                }
+            }
+        },
+        "/api/message/send": {
+            "post": {
+                "tags": [
+                    "Messages"
+                ],
+                "summary": "Send a message in a chatroom",
+                "description": "Send a message in a chatroom.",
+                "operationId": "8075db945371f7cc9f2c68c506695f21",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "chatroom_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "user_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "message_text": {
+                                        "type": "string",
+                                        "example": "Hello everyone!"
+                                    },
+                                    "attachment": {
+                                        "type": "string",
+                                        "format": "binary",
+                                        "example": "file.jpg"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Message sent successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "$ref": "#/components/schemas/Message"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Validation error"
+                    }
+                }
+            }
+        },
+        "/api/messages/{chatroom_id}": {
+            "get": {
+                "tags": [
+                    "Messages"
+                ],
+                "summary": "List messages in a chatroom",
+                "description": "List all messages in a chatroom.",
+                "operationId": "1366a46e1f268860d4a2e49092b05b85",
+                "parameters": [
+                    {
+                        "name": "chatroom_id",
+                        "in": "path",
+                        "description": "ID of the chatroom",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of messages in the chatroom",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "messages": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/Message"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Chatroom not found"
+                    }
+                }
+            }
+        },
+        "/": {
+            "get": {
+                "description": "Home page",
+                "operationId": "58bcf05d446069a7abb4e0a0b863e4ac",
+                "responses": {
+                    "default": {
+                        "description": "Welcome page"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Chatroom": {
+                "title": "Chatroom",
+                "description": "A chatroom model",
+                "required": [
+                    "id",
+                    "name",
+                    "max_members"
+                ],
+                "properties": {
+                    "id": {
+                        "description": "The unique identifier of the chatroom",
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "name": {
+                        "description": "The name of the chatroom",
+                        "type": "string",
+                        "example": "General Chat"
+                    },
+                    "max_members": {
+                        "description": "The maximum number of members allowed in the chatroom",
+                        "type": "integer",
+                        "example": 10
+                    },
+                    "created_at": {
+                        "description": "The creation timestamp of the chatroom",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "description": "The last update timestamp of the chatroom",
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "type": "object"
+            },
+            "Message": {
+                "title": "Message",
+                "description": "A message model representing chatroom messages",
+                "required": [
+                    "id",
+                    "chatroom_id",
+                    "user_id",
+                    "message_text"
+                ],
+                "properties": {
+                    "id": {
+                        "description": "The unique identifier of the message",
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "chatroom_id": {
+                        "description": "The ID of the chatroom the message belongs to",
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "user_id": {
+                        "description": "The ID of the user who sent the message",
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "message_text": {
+                        "description": "The content of the message",
+                        "type": "string",
+                        "example": "Hello everyone!"
+                    },
+                    "attachment_path": {
+                        "description": "Path to the attachment file, if any",
+                        "type": "string",
+                        "example": "root/picture/file.jpg",
+                        "nullable": true
+                    },
+                    "created_at": {
+                        "description": "The timestamp when the message was created",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "description": "The timestamp when the message was last updated",
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "type": "object"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Chatrooms",
+            "description": "API Endpoints for managing chatrooms"
+        },
+        {
+            "name": "Messages",
+            "description": "API Endpoints for managing messages in chatrooms"
+        }
+    ]
+}
